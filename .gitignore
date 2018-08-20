@@ -1,0 +1,32 @@
+# Compiled source #
+###################
+*.pyc
+
+# Packages #
+############
+
+
+# Logs and databases #
+######################
+*.log
+
+# Key pairs #
+#############
+*.key
+*.pub
+*.pem
+
+# OS generated files #
+######################
+
+
+
+# Project files #
+#################
+infra/setup/env/*
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
+.terraform
+
+/.project

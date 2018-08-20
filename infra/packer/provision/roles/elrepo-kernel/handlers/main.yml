@@ -1,0 +1,10 @@
+---
+# The order these handlers are declared in matters.
+# They will always be executed in the order below.
+
+# Mark the most-recently installed entry as default
+- name: grub default
+  command: grub2-set-default 0
+
+- name: grub mkconfig
+  command: grub2-mkconfig -o /boot/grub2/grub.cfg

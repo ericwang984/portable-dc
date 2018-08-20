@@ -1,0 +1,6 @@
+---
+- import_tasks: journald.yml
+  tags: journald
+
+- import_tasks: rsyslog.yml
+  tags: rsyslog

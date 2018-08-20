@@ -1,0 +1,5 @@
+---
+# DC/OS relies on this group to be present
+- name: Add group nogroup
+  group:
+    name: nogroup

@@ -1,0 +1,7 @@
+---
+- name: reload auditd
+  systemd:
+    name: auditd
+    state: reloaded
+    enabled: yes
+    daemon_reload: yes

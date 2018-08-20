@@ -1,0 +1,12 @@
+---
+- name: Install | auditd package
+  yum:
+    name: audit
+
+- name: Install | auditd unit file
+  template:
+    src: auditd.unit.j2
+    dest: /etc/systemd/system/auditd.service
+  notify: reload auditd
+
+- meta: flush_handlers

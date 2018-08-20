@@ -1,0 +1,13 @@
+---
+# Pre-reboot playbook
+# Install ELRepo, tools and upgrade kernel
+- hosts: localhost
+  become: yes
+  roles:
+    - elrepo-kernel  # depends on elrepo
+    - packer
+    - sysctl
+    - role: docker
+      docker_install: true
+      docker_manage_config: true
+    - journald-persist

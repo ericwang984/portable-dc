@@ -1,0 +1,10 @@
+---
+- name: Bootstrap | Run | DC/OS Bootstrap Webserver
+  docker_container:
+    name: dcos-bootstrap
+    image: nginx
+    state: started
+    ports:
+      - "{{ dcos_bootstrap_port }}:80"
+    volumes:
+      - "{{ dcos_bootstrap_dir }}/genconf/serve:/usr/share/nginx/html:ro"

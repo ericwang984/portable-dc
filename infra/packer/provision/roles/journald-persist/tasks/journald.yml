@@ -1,0 +1,9 @@
+---
+- name: journald | /var/log/journal/
+  file:
+    state: directory
+    path: /var/log/journal
+  notify:
+    - create systemd tmpfiles
+
+- meta: flush_handlers

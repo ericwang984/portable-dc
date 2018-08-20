@@ -1,0 +1,13 @@
+---
+- name: Config | /etc/hostname
+  template:
+    src: hostname.j2
+    dest: /etc/hostname
+  notify: reload hostname
+
+- meta: flush_handlers
+
+- name: Config | Set cloud-init hostname
+  template:
+    src: ci_hostname.j2
+    dest: /etc/cloud/cloud.cfg.d/99_hostname.cfg

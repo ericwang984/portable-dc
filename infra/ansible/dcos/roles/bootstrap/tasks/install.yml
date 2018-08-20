@@ -1,0 +1,51 @@
+---
+- name: Bootstrap | Install | Genconf Directory
+  file:
+    path: "{{ dcos_bootstrap_dir }}/genconf"
+    state: directory
+    # Needs to be world-writable, the dcos config generation
+    # happens dockerized and this directory gets bind-mounted.
+    mode: 0777
+
+- name: Bootstrap | Install | Installer/backup Directories
+  file:
+    path: "{{ dcos_bootstrap_dir }}/{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - installers
+    - backup
+
+- name: Bootstrap | Install | DC/OS Configuration and scripts
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ dcos_bootstrap_dir }}/genconf/{{ item }}"
+  with_items:
+    - config.yaml
+    - ip-detect
+  notify:
+    - clear serve
+    - configure dcos
+    - backup serve
+
+- name: Bootstrap | Install | Download the DC/OS installer
+  get_url:
+    url: "{{ dcos_installer_url }}"
+    dest: "{{ dcos_bootstrap_dir }}/installers/dcos_generate_config.sh"
+    mode: 0755
+  register: result
+  until: result is succeeded
+  retries: 5
+
+- name: Bootstrap | Install | Activate Requested Installer
+  file:
+    path: "{{ dcos_bootstrap_dir }}/dcos_generate_config.sh"
+    src: "{{ dcos_bootstrap_dir }}/installers/dcos_generate_config.sh"
+    force: yes
+    state: link
+  notify:
+    - clear serve
+    - configure dcos
+    - backup serve
+
+- meta: flush_handlers

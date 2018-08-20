@@ -1,0 +1,17 @@
+---
+- import_tasks: verify.yml
+  tags: verify
+
+- import_tasks: format.yml
+  tags: format
+
+- import_tasks: install.yml
+  tags: install
+
+- import_tasks: mount.yml
+  tags: mount
+
+- import_tasks: format.yml
+  vars:
+    volume_resize: yes
+  tags: resize

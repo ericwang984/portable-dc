@@ -1,0 +1,6 @@
+---
+- name: Run | auditd
+  service:
+    name: auditd
+    state: started
+    enabled: true

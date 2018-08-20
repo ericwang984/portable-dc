@@ -1,0 +1,8 @@
+---
+- name: Upgrade | All packages
+  yum:
+    name: "*"
+    state: latest
+    # Never upgrade the official kernel package. This overwrites the default
+    # GRUB entry, clobbering our custom kernel-ml default entry.
+    exclude: docker-engine,kernel

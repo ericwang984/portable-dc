@@ -1,0 +1,9 @@
+{
+  "cluster-store": "{{ docker_cluster_store | default('') }}",
+  "live-restore": {{ docker_live_restore | default('true') }},
+{% if docker_security | bool %}
+  "userns-remap": "dockremap",
+  "icc": false,
+{% endif %}
+  "log-driver": "{{ docker_log_driver | default('none') }}"
+}

@@ -1,0 +1,9 @@
+---
+- name: Run | Mount Devices
+  systemd:
+    daemon_reload: yes
+    name: "{{ item.value.path | split('/') | join('-') }}.mount"
+    state: started
+    enabled: yes
+  when: item.key in ansible_devices.keys()
+  with_dict: "{{ volume_mounts }}"

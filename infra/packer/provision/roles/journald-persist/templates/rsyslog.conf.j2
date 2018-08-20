@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+# Listen on legacy local syslog socket (configured in /etc/rsyslog.d/listen.conf on CentOS)
+$ModLoad imuxsock # provides support for local system logging (e.g. via logger command)
+
+# Where to place auxiliary files
+$WorkDirectory /var/lib/rsyslog
+
+# Use default timestamp format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+
+# Include all config files in /etc/rsyslog.d/
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+# Everybody gets emergency messages
+*.emerg                                                 :omusrmsg:*

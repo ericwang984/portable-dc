@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+-w /etc/docker/ -p wa -k docker_etc
+-w /lib/systemd/system/docker.service -p wa -k docker_service
+-w /etc/systemd/system/docker.service -p wa -k docker_service_etc
+-w /etc/systemd/system/docker.service.d/ -p wa -k docker_service_d

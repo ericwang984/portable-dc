@@ -1,0 +1,6 @@
+---
+- name: Run | Service
+  service:
+    name: docker
+    state: started
+    enabled: true

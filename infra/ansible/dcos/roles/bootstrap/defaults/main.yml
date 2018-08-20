@@ -1,0 +1,11 @@
+---
+dcos_installer_url: "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
+dcos_bootstrap_dir: /opt/dcos-bootstrap
+dcos_resolvers_0: '8.8.8.4'
+dcos_resolvers_1: '8.8.8.8'
+
+# master_lb_ip:
+# aws_key:
+# aws_region:
+# aws_secret:
+# s3_bucket:

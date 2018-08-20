@@ -1,0 +1,26 @@
+---
+- name: UserNS | dockremap group
+  group:
+    name: dockremap
+    gid: 10000
+    system: yes
+
+- name: UserNS | dockremap user
+  user:
+    name: dockremap
+    group: dockremap
+    uid: 10000
+    system: yes
+    createhome: no
+    home: /sbin
+    shell: /sbin/nologin
+
+- name: UserNS | Sub-UID mapping file
+  template:
+    src: subguid.j2
+    dest: /etc/subuid
+
+- name: UserNS | Sub-GID mapping file
+  template:
+    src: subguid.j2
+    dest: /etc/subgid

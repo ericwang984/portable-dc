@@ -1,0 +1,16 @@
+---
+- name: Verify | Check volume_mounts
+  assert:
+    that:
+      - volume_mounts is defined
+    msg: '`volume_mounts` is undefined'
+
+- name: Verify | Path validity
+  assert:
+    that:
+      - item.value.path is defined
+      - item.value.path  # non-zero length
+      - item.value.path.startswith('/')  # starts with a slash
+      - "' ' not in item.value.path"  # does not contain spaces
+    msg: "Volume {{ item.key }} has an invalid mount point"
+  with_dict: "{{ volume_mounts }}"

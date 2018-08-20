@@ -1,0 +1,39 @@
+---
+- name: Install | Docker Yum Repository
+  yum_repository:
+    name: docker
+    description: Docker Repository
+    baseurl: https://yum.dockerproject.org/repo/main/centos/$releasever/
+    gpgkey: https://yum.dockerproject.org/gpg
+    gpgcheck: yes
+
+- name: Install | OverlayFS module-load.d
+  lineinfile:
+    dest: /etc/modules-load.d/overlay.conf
+    regexp: "^overlay"
+    line: overlay
+    create: yes
+
+- name: Install | OverlayFS Kernel Module
+  modprobe:
+    name: overlay
+    state: present
+
+- name: Install | docker.service.d directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: Install | dockerd unit overrides
+  template:
+    src: dockerd.unit.j2
+    dest: /etc/systemd/system/docker.service.d/override.conf
+
+- name: Install | Docker Engine
+  yum:
+    name: "docker-engine-{{ docker_version }}.el7.centos"
+    state: present
+
+- name: Install | Python docker module
+  pip: 
+    name: docker-py

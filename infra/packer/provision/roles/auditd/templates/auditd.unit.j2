@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+# Custom auditd unit file to support live reloading of rule sets using augenrules.
+
+[Unit]
+Description=Security Auditing Service
+DefaultDependencies=no
+After=local-fs.target systemd-tmpfiles-setup.service
+Conflicts=shutdown.target
+Before=sysinit.target shutdown.target
+RefuseManualStop=yes
+ConditionKernelCommandLine=!audit=0
+Documentation=man:auditd(8) https://github.com/linux-audit/audit-documentation
+
+[Service]
+Type=forking
+PIDFile=/var/run/auditd.pid
+ExecStart=/sbin/auditd
+ExecStartPost=-/sbin/augenrules --load
+
+ExecReload=/bin/kill -HUP $MAINPID
+ExecReload=/sbin/augenrules --load
+
+[Install]
+WantedBy=multi-user.target

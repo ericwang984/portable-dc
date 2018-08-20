@@ -1,0 +1,7 @@
+python-terraform==0.10.0
+jinja2==2.10
+pycrypto==2.6.1
+paramiko==2.4.1
+ansible==2.6.2    
+netaddr==0.7.19   #Used for ansible ipaddr filter
+

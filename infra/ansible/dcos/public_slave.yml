@@ -1,0 +1,10 @@
+---
+- hosts: bastion
+
+- hosts: public_slave
+  become: yes
+  roles:
+    - base
+    - { role: node, dcos_node_type: slave_public}
+  tags:
+    - public_slave

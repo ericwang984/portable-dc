@@ -1,0 +1,21 @@
+---
+- name: Node | Install | Check Mesosphere install path
+  stat:
+    path: /opt/mesosphere
+  register: dcos_installpath
+
+- name: Node | Install | DC/OS Download Directory
+  file:
+    path: /opt/dcos
+    state: directory
+
+- name: Node | Install | Download DC/OS installer from bootstrap host
+  get_url:
+    url: "{{ dcos_bootstrap_url }}/dcos_install.sh"
+    dest: /opt/dcos/dcos_install.sh
+    mode: 0755
+  when: dcos_installpath.stat.exists == false
+
+- name: Node | Install | DC/OS
+  command: "/opt/dcos/dcos_install.sh {{ dcos_node_type }}"
+  when: dcos_installpath.stat.exists == false

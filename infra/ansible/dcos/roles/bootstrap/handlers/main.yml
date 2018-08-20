@@ -1,0 +1,22 @@
+---
+# Handlers are executed in the order of declaration in this file.
+# Don't change the handler without reason.
+
+# The serve directory grows quickly as new versions/pkgpanda packages are added.
+# Because of this, the serve directory is cleared before regenerating it to
+# clean out older versions.
+- name: clear serve
+  file: 
+    path: "{{ dcos_bootstrap_dir }}/genconf/serve/*"
+    state: absent
+
+- name: configure dcos
+  command: "{{ dcos_bootstrap_dir }}/dcos_generate_config.sh"
+  args:
+    chdir: "{{ dcos_bootstrap_dir }}"
+
+- name: backup serve
+  archive:
+    path: "{{ dcos_bootstrap_dir }}/genconf/serve/"
+    dest: "{{ dcos_bootstrap_dir }}/backup/dcos-serve-{{ ansible_date_time.iso8601_basic }}.gz"
+    format: gz

@@ -1,0 +1,9 @@
+---
+- name: Format | Create or Resize Filesystem
+  filesystem:
+    dev: "/dev/{{ item.key }}"
+    fstype: "{{ item.value.fstype | default('xfs') }}"
+    # grow the filesystem if `volume_resize` is passed and it's an XFS volume
+    resizefs: "{{ (item.value.fstype | default('xfs') == 'xfs') and (volume_resize | default(False)) | bool }}"
+  when: item.key in ansible_devices.keys()
+  with_dict: "{{ volume_mounts }}"

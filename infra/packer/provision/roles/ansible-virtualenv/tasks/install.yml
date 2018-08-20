@@ -1,0 +1,8 @@
+---
+- name: Install | easy_install pip
+  easy_install:
+    name: pip
+
+- name: Install | virtualenv RPM
+  yum:
+    name: python-virtualenv

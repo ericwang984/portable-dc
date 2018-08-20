@@ -1,0 +1,9 @@
+---
+- name: auditd | Docker Audit Rules
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/rules.d/docker.rules
+  notify: reload auditd
+
+# Start logging during initial Docker installation
+- meta: flush_handlers

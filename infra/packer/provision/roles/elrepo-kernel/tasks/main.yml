@@ -1,0 +1,20 @@
+---
+# kernel_version is set in Packer templates
+- name: ELRepo Kernel w/ headers
+  yum:
+    name:
+      - "kernel-ml-{{ kernel_version | mandatory }}"
+      - "kernel-ml-devel-{{ kernel_version | mandatory }}"
+    state: present
+    enablerepo: elrepo-kernel,elrepo-kernel-archive
+  notify:
+    - grub default
+    - grub mkconfig
+
+- name: GRUB Launch Configuration
+  template:
+    src: kernel.conf
+    dest: /etc/default/grub
+  notify: grub mkconfig
+
+- meta: flush_handlers

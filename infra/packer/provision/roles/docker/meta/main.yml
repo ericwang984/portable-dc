@@ -1,0 +1,13 @@
+---
+dependencies:
+  - role: ansible-pip
+    ansible_pip_packages:
+      - docker-py==1.10.6
+  - role: auditd
+    when: docker_install | default(false)
+  - role: volumes
+    when: docker_install | default(false)
+    volume_mounts:
+      xvdp:
+        path: /var/lib/docker
+        before: docker.service

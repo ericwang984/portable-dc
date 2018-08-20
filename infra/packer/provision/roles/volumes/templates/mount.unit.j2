@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+[Unit]
+Before={{ item.value.before | default('') }}
+
+[Install]
+RequiredBy={{ item.value.before | default('') }}
+
+[Mount]
+What=/dev/{{ item.key | mandatory }}
+Where={{ item.value.path | mandatory }}
+Type={{ item.value.fstype | default('xfs') }}
+Options={{ item.value.options | default('') }}

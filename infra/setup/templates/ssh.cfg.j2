@@ -1,0 +1,11 @@
+Host {{ bastion_ip }}
+  User centos
+  IdentityFile {{ private_key_path }}
+  ControlMaster auto
+  ControlPath ~/.ssh/ansible-%r@%h:%p
+  ControlPersist 30m
+
+Host 10.0.*
+  User centos
+  ProxyCommand ssh -F {{ ssh_cfg_path }} -W %h:%p centos@{{ bastion_ip }}
+  IdentityFile {{ private_key_path }}

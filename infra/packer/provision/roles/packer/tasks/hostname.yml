@@ -1,0 +1,17 @@
+---
+- name: Hostname | /etc/hostname
+  copy:
+    content: "{{ packer_build_name }}"
+    dest: /etc/hostname
+  notify: reload hostname
+
+- name: Hostname | get provider name
+  debug: msg="{{provider}}"
+
+- name: Hostname | Disable cloud-init hostname management
+  copy:
+    content: "preserve_hostname: true"
+    dest: /etc/cloud/cloud.cfg.d/99_hostname.cfg
+  when: provider == "aws"
+
+- meta: flush_handlers

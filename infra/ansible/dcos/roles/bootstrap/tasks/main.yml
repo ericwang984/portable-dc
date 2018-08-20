@@ -1,0 +1,9 @@
+---
+# Download and install DC/OS, generate config tarball.
+- import_tasks: install.yml
+  tags: install
+
+# Run bootstrap nginx container.
+- import_tasks: run.yml
+  tags: run
+

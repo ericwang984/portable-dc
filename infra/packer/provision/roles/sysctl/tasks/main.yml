@@ -1,0 +1,11 @@
+---
+- name: sysctl | limits.d
+  template:
+    src: limits.conf
+    dest: /etc/security/limits.d/99-limits.conf
+
+- name: sysctl | sysctl.d
+  template:
+    src: sysctl.conf
+    dest: /etc/sysctl.d/98-sysctl.conf
+  notify: apply sysctl

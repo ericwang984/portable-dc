@@ -1,0 +1,10 @@
+---
+- hosts: bastion
+
+- hosts: master
+  become: yes
+  roles:
+    - base
+    - { role: node, dcos_node_type: master}
+  tags:
+    - master

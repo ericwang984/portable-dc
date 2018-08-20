@@ -1,0 +1,12 @@
+---
+- import_tasks: install.yml
+  when: docker_install | default(false)
+  tags: install
+
+#TODO: Enable user namespaces before deployed to production environment.
+# - import_tasks: configure.yml
+#   tags: configure
+#   when: docker_manage_config | default(false)
+
+- import_tasks: run.yml
+  tags: run

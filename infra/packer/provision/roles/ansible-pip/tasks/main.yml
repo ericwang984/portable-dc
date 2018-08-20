@@ -1,0 +1,18 @@
+---
+- name: Check ansible_pip_packages
+  assert:
+    that:
+      - ansible_pip_packages is defined
+      - ansible_pip_packages is iterable
+  check_mode: no
+  tags: always
+
+- name: pip install in Ansible virtualenv
+  pip:
+    name: "{{ ansible_pip_packages | mandatory }}"
+    virtualenv: "{{ ansible_virtualenv_dir | mandatory }}"
+  # explicitly set `become`, this role is included by roles that
+  # don't require root privileges.
+  become: yes
+  check_mode: no
+  tags: always

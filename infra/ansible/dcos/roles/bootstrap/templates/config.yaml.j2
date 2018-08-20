@@ -1,0 +1,16 @@
+bootstrap_url: {{ dcos_bootstrap_url }}
+cluster_name: {{ dcos_cluster_name }}
+exhibitor_storage_backend: static
+master_discovery: static
+
+master_list:
+{% for host in groups['master'] %}
+- {{ host }}
+{% endfor %}
+
+resolvers:
+- {{ dcos_resolvers_0 }}
+- {{ dcos_resolvers_1 }}
+
+#If IPv6 is disabled in your kernel, you must disable it in the config.yaml
+enable_ipv6: 'false'

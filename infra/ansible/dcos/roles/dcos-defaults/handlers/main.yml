@@ -1,0 +1,17 @@
+---
+# Do not change the declaration order of these handlers.
+
+# Mesos Slaves require this symlink to be removed when the
+# slave configuration changes, before restarting.
+- name: clear mesos state
+  file:
+    path: /var/lib/mesos/slave/meta/slaves/latest
+    state: absent
+
+# This handler might fail during bootstrap because it has
+# a pre-check on ready.spartan and loops anyway. Ignore failures.
+- name: restart dcos agent
+  service:
+    name: "dcos-mesos-{{ dcos_node_type }}{{ (dcos_slave_type == 'public') | ternary('-public', '' ) }}"
+    state: restarted
+  ignore_errors: true

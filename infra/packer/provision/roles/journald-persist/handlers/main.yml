@@ -1,0 +1,8 @@
+---
+- name: create systemd tmpfiles
+  command: systemd-tmpfiles --create --prefix /var/log/journal
+
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted

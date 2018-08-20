@@ -1,0 +1,5 @@
+---
+dcos_cluster_name: dcos
+dcos_bootstrap_port: 80
+dcos_bootstrap_url: http://{{ hostvars[groups['bastion'][0]]['ansible_default_ipv4']['address'] }}:{{ dcos_bootstrap_port }}
+

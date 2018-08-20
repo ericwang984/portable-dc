@@ -1,0 +1,12 @@
+---
+- import_tasks: configure/auditd.yml
+  tags: auditd
+
+# Only touch system resources for user namespace remapping
+# if docker_security correctly evaluates to a True bool.
+- import_tasks: configure/userns.yml
+  when: docker_security | bool
+  tags: userns
+
+- import_tasks: configure/daemon.yml
+  tags: daemon

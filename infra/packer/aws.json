@@ -1,0 +1,74 @@
+{
+    "variables": {
+      "vault_secret": "{{env `ANSIBLE_VAULT_PASSWORD`}}",
+      "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+      "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+      "kernel_version": "4.17.11",
+      "build_timestamp": "{{isotime \"20060102150405\"}}",
+      "ami_ap-southeast-2": "ami-b6bb47d4",
+      "provider": "aws"
+
+    },
+  
+    "builders": [
+        {   
+            "type": "amazon-ebs",
+            "name": "centos7-base-ase2-{{user `kernel_version`}}",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "region": "ap-southeast-2",
+            "source_ami": "{{user `ami_ap-southeast-2`}}",
+            "ena_support": true,
+            "instance_type": "t2.micro",
+            "ssh_username": "centos",
+            "ami_name": "centos7-base-ase2-{{user `kernel_version`}}-{{timestamp}}",
+            "user_data_file" : "files/user-data.txt",
+            "launch_block_device_mappings": [
+              {
+                "device_name": "/dev/sda1",
+                "volume_size": 50,
+                "volume_type": "gp2",
+                "delete_on_termination": true
+              },
+              {
+                "device_name": "xvdp",
+                "volume_size": 50,
+                "volume_type": "gp2",
+                "delete_on_termination": true
+              }
+            ]
+        }
+    ],
+  
+    "provisioners": [{
+      "type": "shell",
+      "inline": ["sleep 10"]
+    },{
+      "type": "shell",
+      "inline": [
+        "sudo yum -y install python-setuptools gcc libffi-devel python-devel openssl-devel",
+        "sudo easy_install pip",
+        "sudo pip install ansible",
+        "echo \"{{user `vault_secret`}}\" > /tmp/ansible-vault"
+      ]
+    },{
+      "type": "ansible-local",
+      "command": "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ansible-playbook",
+      "playbook_file": "./provision/aws.yml",
+      "playbook_dir": "./provision",
+      "role_paths": ["./provision/roles/."],
+      "clean_staging_directory": true,
+      "extra_arguments": [
+        "--diff",
+        "--vault-password-file=/tmp/ansible-vault",
+        "-e \"kernel_version={{user `kernel_version`}}\" -e \"provider={{user `provider`}}\""
+      ]
+    },{
+       "type": "shell",
+       "inline": [
+        "rm /tmp/ansible-vault"
+      ]
+    }]
+ 
+}
+  

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -o nounset -o errexit
+export PATH=/usr/sbin:/usr/bin:$PATH
+curl -fsSL http://169.254.169.254/1.0/meta-data/local-ipv4

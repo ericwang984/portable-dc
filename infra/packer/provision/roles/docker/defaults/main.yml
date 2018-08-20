@@ -1,0 +1,28 @@
+---
+# Switch to manage the configuration file in /etc/docker/daemon.json
+# Useful for including this role as a dependency to only install the package
+docker_manage_config: false
+
+# Optimization to skip dockerd installation
+docker_install: false
+
+# Version of the Docker package to install
+docker_version: 17.05.0.ce-1
+
+# Configuration entries to be rendered into /etc/docker/daemon.json
+# Behaviour can be disabled by setting `docker_manage_config` to false
+
+# docker_cluster_store: ''
+# docker_live_restore: true
+# docker_log_driver: none
+
+# Enable Docker security improvements:
+# - UID/GID remapping of user namespaces
+# - no-new-privileges
+# Used for backwards compatibility with long-running platforms
+# that might not survive a cluster-wide dockerd restart.
+docker_security: true
+
+# Start of the subrange mapped to a container.
+# UID 0 inside the container will be mapped onto this UID on the host.
+docker_subguid_start: 100000

@@ -1,0 +1,8 @@
+---
+# Location of the Ansible virtualenv on the remote.
+# Also defined in ansible-virtualenv, make changes in both files.
+ansible_virtualenv_dir: /opt/virtualenv/ansible
+
+# A list of packages (with versions, if required) to install
+# in the remote Ansible virtualenv.
+# ansible_pip_packages: []

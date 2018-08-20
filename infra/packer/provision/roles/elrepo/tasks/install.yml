@@ -1,0 +1,26 @@
+---
+- name: Install | Check elrepo.repo present
+  stat:
+    path: /etc/yum.repos.d/elrepo.repo
+  register: elrepo_exists
+
+- name: Install | elrepo RPM
+  yum:
+    name: "{{ elrepo_repo_url }}"
+    state: present
+  register: result
+  until: not result.failed
+  retries: 3
+  delay: 5
+  when: not elrepo_exists.stat.exists
+
+- name: Install | elrepo GPG key
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+    state: present
+
+- name: Install | Disable elrepo
+  replace:
+    path: /etc/yum.repos.d/elrepo.repo
+    regexp: '^enabled=1$'
+    replace: 'enabled=0'

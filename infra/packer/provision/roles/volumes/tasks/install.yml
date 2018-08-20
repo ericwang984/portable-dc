@@ -1,0 +1,7 @@
+---
+- name: Install | Mount Unit Files
+  template:
+    src: mount.unit.j2
+    dest: "/etc/systemd/system/{{ item.value.path | split('/') | join('-') }}.mount"
+  when: item.key in ansible_devices.keys()
+  with_dict: "{{ volume_mounts }}"

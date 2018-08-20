@@ -1,0 +1,16 @@
+---
+# `volume_mounts` should be a dictionary of devices in /dev/ to their
+# respective mount paths on disk. The devices will only be attempted to be
+# mounted when they are present. Multiple devices can specify the same path,
+# as long as both devices are not present simultaneously.
+
+# Device names of EBS volumes can be specified when attaching them to machines,
+# typically in the `sd[f-p]` range. Recent kernels will translate these device
+# names to `xvd[f-p]`. Start from the highest available value in the sequence,
+# because container schedulers will start from the bottom.
+
+# volume_mounts:
+#   xvdp:
+#     path: /var/lib/docker
+#     fstype: xfs
+#     options: rw,relatime

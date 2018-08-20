@@ -1,0 +1,13 @@
+---
+- name: Configure | /etc/docker directory
+  file:
+    path: /etc/docker
+    state: directory
+
+- name: Configure | Daemon Configuration
+  template:
+    src: daemon.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker
+
+- meta: flush_handlers

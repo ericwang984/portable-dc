@@ -1,0 +1,10 @@
+---
+- name: Archive | Kernel Repository
+  yum_repository:
+    name: elrepo-kernel-archive
+    description: ELRepo.org Kernel Archive Repository (older kernels)
+    file: elrepo
+    baseurl: http://mirror.rackspace.com/elrepo/archive/kernel/el7/$basearch/
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+    gpgcheck: yes
+    enabled: no

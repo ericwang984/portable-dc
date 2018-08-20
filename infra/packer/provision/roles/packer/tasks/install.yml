@@ -1,0 +1,44 @@
+---
+- name: Install | Install EPEL
+  yum:
+    name: epel-release
+
+- name: Install | System monitoring tools
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - htop
+    - iotop
+    - iftop
+    - psmisc
+    - time
+
+- name: Install | Compression utilities
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - tar
+    - xz
+    - unzip
+
+- name: Install | Data parsing
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - jq
+    - vim
+
+- name: Install | Network tools
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - ipset
+    - curl
+    - bind-utils
+    - telnet
+    - nmap-ncat
+    - collectl
+    - tcpflow
+    - iptraf-ng
+    - socat
+    - net-tools

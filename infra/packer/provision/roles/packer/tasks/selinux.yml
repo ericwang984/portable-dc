@@ -1,0 +1,11 @@
+---
+- name: SELinux | permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: SELinux | setenforce
+  command: setenforce 0
+  when:
+    - ansible_selinux is defined
+    - ansible_selinux.status == "enabled"

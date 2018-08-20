@@ -1,0 +1,13 @@
+---
+- name: Config | auditd rules.d directory
+  file:
+    state: directory
+    path: /etc/audit/rules.d
+
+- name: Config | audit.rules
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/rules.d/audit.rules
+  notify: reload auditd
+
+- meta: flush_handlers

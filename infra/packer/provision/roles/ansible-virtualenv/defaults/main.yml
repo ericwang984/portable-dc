@@ -1,0 +1,4 @@
+---
+# Location of the Ansible virtualenv on the remote.
+# Also defined in ansible-pip, make changes in both files.
+ansible_virtualenv_dir: /opt/virtualenv/ansible

@@ -1,0 +1,9 @@
+---
+- hosts: bastion
+  become: yes
+  roles:
+    - base
+    - bootstrap
+  tags:
+    - bootstrap
+

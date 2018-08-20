@@ -1,0 +1,40 @@
+name = "{{ cluster_name }}"
+
+region = "ap-southeast-2"
+
+site_public_key = "{{ public_key_path }}"
+
+# Network
+vpc_cidr = "10.0.0.0/16"
+
+azs = "ap-southeast-2a,ap-southeast-2b,ap-southeast-2c"
+
+private_slave_subnets = "10.0.7.0/24,10.0.8.0/24,10.0.9.0/24"
+
+public_slave_subnets = "10.0.4.0/24,10.0.5.0/24,10.0.6.0/24"
+
+master_subnets = "10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"
+
+bastion_ami = "ami-0e6cdac04b97af3c8"
+
+bastion_instance_type = "t2.micro"
+
+# Compute
+# TODO: Use map to locate amis
+master_ami = "ami-0e6cdac04b97af3c8"
+
+master_instance_type = "t2.medium"
+
+master_node_count = "1"
+
+private_slave_ami = "ami-0e6cdac04b97af3c8"
+
+private_slave_instance_type = "t2.medium"
+
+private_slave_node_count = "2"
+
+public_slave_ami = "ami-0e6cdac04b97af3c8"
+
+public_slave_instance_type = "t2.medium"
+
+public_slave_node_count = "2"

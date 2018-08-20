@@ -1,0 +1,5 @@
+{% if inventory_hostname | ipaddr %}
+fqdn: ip-{{ ansible_default_ipv4.address | replace('.', '-') }}
+{% else %}
+fqdn: {{ inventory_hostname }}
+{% endif %}
